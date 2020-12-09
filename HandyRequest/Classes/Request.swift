@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import Moya
 
-let Rest: (RequestConfig & Request) = HandyService()
+public let Rest: (RequestConfig & Request) = HandyService()
 
 /// Service Config
 public protocol RequestConfig: class {
