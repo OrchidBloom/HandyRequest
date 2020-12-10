@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HandyRequest'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of HandyRequest.'
+  s.version          = '0.0.1'
+  s.summary          = 'Convenient network request, fast processing result.'
   s.description      = 'Quickly and quickly request processing of analytical data'
 
   s.homepage         = 'https://github.com/OrchidBloom/HandyRequest'
