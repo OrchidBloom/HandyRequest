@@ -38,6 +38,7 @@ extension HandyService: RequestConfig {
     }
     set {
       _requestAdapter = newValue
+      rebuildProvider()
     }
   }
 
@@ -161,7 +162,14 @@ private final class NetworkHUDPlugin: PluginType {
   }
 }
 
+// MARK: - RequestAdapter Default implementation
 private class DefaultRequestAdapter: RequestAdapter {
+  func endpointClosureBuilder(target: MultiTarget) -> Endpoint {
+    RestProvider.defaultEndpointMapping(for: target)
+  }
+  func requestClosureBuilder(endpoint: Endpoint, closure: RestProvider<MultiTarget>.RequestResultClosure) {
+    RestProvider<MultiTarget>.defaultRequestMapping(for: endpoint, closure: closure)
+  }
   func singleClosureBuilder(single: @escaping SingleResponse, result: RestCompletion) {
     switch result {
       case .success(let reponse):

@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+      Rest.requestAdapter = HandyRequestAdapter() // Set request adapter, Error handling can be customized
+
       Rest.launch(ExampleAPI.movies)
         .mapJSONForKey("movies")
         .decodeArray(Movie.self)

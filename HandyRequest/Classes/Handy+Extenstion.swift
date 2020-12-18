@@ -22,15 +22,6 @@ public extension Request {
     return launch(target, alwaysFetchCache: alwaysFetchCache, callbackQueue: callbackQueue, progress: progress)
   }
 }
-// MARK: - RequestAdapter Default implementation
-public extension RequestAdapter {
-  func endpointClosureBuilder(target: MultiTarget) -> Endpoint {
-    RestProvider.defaultEndpointMapping(for: target)
-  }
-  func requestClosureBuilder(endpoint: Endpoint, closure: RestProvider<MultiTarget>.RequestResultClosure) {
-    RestProvider<MultiTarget>.defaultRequestMapping(for: endpoint, closure: closure)
-  }
-}
 
 // MARK: - String suppurt
 public extension String {
