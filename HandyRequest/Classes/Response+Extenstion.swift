@@ -18,7 +18,7 @@ extension HandyResponse {
   
   /// 返回Any
   /// - 描述: 将response转换为Any
-  func mapJSON(failsOnEmptyData: Bool = true) throws -> Any {
+  public func mapJSON(failsOnEmptyData: Bool = true) throws -> Any {
     do {
       return try response.mapJSON(failsOnEmptyData: failsOnEmptyData)
     } catch {

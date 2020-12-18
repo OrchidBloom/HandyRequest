@@ -26,7 +26,7 @@ public class HandyService {
   }
   
   func registerDependencyService() {
-    _provider = MoyaProvider<MultiTarget>(endpointClosure: _requestAdapter.endpointClosureBuilder, requestClosure: _requestAdapter.requestClosureBuilder, callbackQueue: DispatchQueue.main, plugins: _globalPlugins)
+    _provider = MoyaProvider<MultiTarget>(endpointClosure: requestAdapter.endpointClosureBuilder, requestClosure: requestAdapter.requestClosureBuilder, callbackQueue: DispatchQueue.main, plugins: globalPlugins)
     _cache = RequestCache()
   }
 }
@@ -34,7 +34,7 @@ public class HandyService {
 extension HandyService: RequestConfig {
   public var requestAdapter: RequestAdapter {
     get {
-      _requestAdapter
+      _requestAdapter == nil ? DefaultRequestAdapter() : _requestAdapter
     }
     set {
       _requestAdapter = newValue
@@ -71,7 +71,7 @@ extension HandyService: RequestConfig {
     get {
       if _globalPlugins.count == 0 {
         #if DEBUG
-        _globalPlugins = [NetworkHUDPlugin(), NetworkLoggerPlugin()]
+        _globalPlugins = [NetworkHUDPlugin(), NetworkLoggerPlugin(configuration: NetworkLoggerPlugin.Configuration(logOptions: .verbose))]
         #else
         _globalPlugins = [NetworkHUDPlugin()]
         #endif
@@ -104,7 +104,7 @@ extension HandyService: RequestConfig {
   }
 
   func rebuildProvider() {
-    _provider = MoyaProvider<MultiTarget>(endpointClosure: _requestAdapter.endpointClosureBuilder, requestClosure: _requestAdapter.requestClosureBuilder, callbackQueue: DispatchQueue.main, plugins: _globalPlugins)
+    _provider = MoyaProvider<MultiTarget>(endpointClosure: requestAdapter.endpointClosureBuilder, requestClosure: requestAdapter.requestClosureBuilder, callbackQueue: DispatchQueue.main, plugins: globalPlugins)
   }
 }
 
@@ -116,9 +116,9 @@ extension HandyService: Request {
       let task = self.provider.request(MultiTarget(target), callbackQueue: callbackQueue, progress: progress, completion: { (result) in
         switch result {
         case .success(let value):
-          self._requestAdapter.singleClosureBuilder(single: single, result: .success(value))
+          self.requestAdapter.singleClosureBuilder(single: single, result: .success(value))
         case .failure(let error):
-          self._requestAdapter.singleClosureBuilder(single: single, result: .failure(error))
+          self.requestAdapter.singleClosureBuilder(single: single, result: .failure(error))
         }
       })
       return Disposables.create { task.cancel() }
@@ -137,11 +137,11 @@ extension HandyService: Request {
       let task = self.provider.request(MultiTarget(target), callbackQueue: callbackQueue, progress: progress, completion: { (result) in
         switch result {
         case .success(let value):
-          if self._requestAdapter.observableClosureBuilder(observer: observer, result: .success(value)) {
+          if self.requestAdapter.observableClosureBuilder(observer: observer, result: .success(value)) {
             self.cache.cacheResponse(target, response: value)
           }
         case .failure(let error):
-          _ = self._requestAdapter.observableClosureBuilder(observer: observer, result: .failure(error))
+          _ = self.requestAdapter.observableClosureBuilder(observer: observer, result: .failure(error))
         }
       })
       return Disposables.create {task.cancel()}
@@ -159,6 +159,10 @@ private final class NetworkHUDPlugin: PluginType {
   func didReceive(_ result: Result<Moya.Response, MoyaError>, target: ApiType) {
     UIApplication.shared.isNetworkActivityIndicatorVisible = false
   }
+}
+
+private class DefaultRequestAdapter: RequestAdapter {
+
 }
 
 

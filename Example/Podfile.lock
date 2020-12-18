@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.4.0)
-  - HandyRequest (0.1.0):
+  - HandyRequest (0.0.2):
     - Moya (~> 14.0.0)
     - ObjectMapper (~> 4.2.0)
     - RxSwift (~> 5.1.1)
@@ -30,7 +30,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
-  HandyRequest: 2d25502fcc079a62c0f0c24bcf96915f7da029e7
+  HandyRequest: 27dda174cbe1dc83ec6c4f68e4929f266be205d4
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178

@@ -28,7 +28,7 @@ public struct HandyResponse: BaseResponse {
     return _response
   }
 
-  init(_ response: Response) {
+  public init(_ response: Response) {
     
     _response = response
     

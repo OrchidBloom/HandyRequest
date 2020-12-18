@@ -30,6 +30,25 @@ public extension RequestAdapter {
   func requestClosureBuilder(endpoint: Endpoint, closure: RestProvider<MultiTarget>.RequestResultClosure) {
     RestProvider<MultiTarget>.defaultRequestMapping(for: endpoint, closure: closure)
   }
+  func singleClosureBuilder(single: @escaping SingleResponse, result: RestCompletion) {
+    switch result {
+      case .success(let reponse):
+        single(.success(HandyResponse(reponse)))
+      case .failure(let error):
+        single(.error(error))
+    }
+  }
+  func observableClosureBuilder(observer: ObservableResponse, result: RestCompletion) -> Bool {
+    switch result {
+      case .success(let reponse):
+        observer.onNext(HandyResponse(reponse))
+        observer.onCompleted()
+        return true
+      case .failure(let error):
+        observer.onError(error)
+        return false
+    }
+  }
 }
 
 // MARK: - String suppurt

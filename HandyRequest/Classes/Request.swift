@@ -29,7 +29,7 @@ public protocol RequestErroreDelegate: class {
   func handleRestError(_ err: Error)
 }
 
-// Request Adapter
+// Request Adapter & Handling the business layer
 public protocol RequestAdapter: class {
     func endpointClosureBuilder(target: MultiTarget) -> Endpoint
     func requestClosureBuilder(endpoint: Endpoint, closure: RestProvider<MultiTarget>.RequestResultClosure)

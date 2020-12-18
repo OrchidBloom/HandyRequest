@@ -8,12 +8,20 @@
 
 import UIKit
 import HandyRequest
+import RxSwift
 
 class ViewController: UIViewController {
 
+     var bag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+
+        Rest.launch(ExampleAPI.movies).subscribe { (response) in
+          print(response)
+        } onError: { (error) in
+          print(error)
+        }.disposed(by: bag)
     }
 }
 
