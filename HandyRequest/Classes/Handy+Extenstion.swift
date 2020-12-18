@@ -15,10 +15,10 @@ import RxSwift
 
 // MARK: - IRequest default implement
 public extension Request {
-  func launch(_ target: ApiType, callbackQueue: DispatchQueue? = .main, progress: ProgressBlock? = .none) -> Single<BaseResponse> {
+  func launch(_ target: ApiType, callbackQueue: DispatchQueue? = .main, progress: ProgressBlock? = .none) -> Single<HandyResponse> {
     return launch(target, callbackQueue: callbackQueue, progress: progress)
   }
-  func launch(_ target: ApiType, alwaysFetchCache: Bool = false, callbackQueue: DispatchQueue? = DispatchQueue.main, progress: ProgressBlock? = .none) -> Observable<BaseResponse> {
+  func launch(_ target: ApiType, alwaysFetchCache: Bool = false, callbackQueue: DispatchQueue? = DispatchQueue.main, progress: ProgressBlock? = .none) -> Observable<HandyResponse> {
     return launch(target, alwaysFetchCache: alwaysFetchCache, callbackQueue: callbackQueue, progress: progress)
   }
 }
@@ -29,25 +29,6 @@ public extension RequestAdapter {
   }
   func requestClosureBuilder(endpoint: Endpoint, closure: RestProvider<MultiTarget>.RequestResultClosure) {
     RestProvider<MultiTarget>.defaultRequestMapping(for: endpoint, closure: closure)
-  }
-  func singleClosureBuilder(single: @escaping SingleResponse, result: RestCompletion) {
-    switch result {
-      case .success(let reponse):
-        single(.success(HandyResponse(reponse)))
-      case .failure(let error):
-        single(.error(error))
-    }
-  }
-  func observableClosureBuilder(observer: ObservableResponse, result: RestCompletion) -> Bool {
-    switch result {
-      case .success(let reponse):
-        observer.onNext(HandyResponse(reponse))
-        observer.onCompleted()
-        return true
-      case .failure(let error):
-        observer.onError(error)
-        return false
-    }
   }
 }
 

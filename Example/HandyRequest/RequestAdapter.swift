@@ -9,7 +9,7 @@
 import Foundation
 import HandyRequest
 
-class HandyRequestAdapter: RequestAdapter {
+class HandyRequestAdapter {
 
 }
 

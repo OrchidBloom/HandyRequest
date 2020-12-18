@@ -54,8 +54,8 @@ public typealias RequestClosure = (Endpoint, RestProvider<MultiTarget>.RequestRe
 public typealias Endpoint = Moya.Endpoint
 public typealias RestError = Moya.MoyaError
 
-public typealias SingleResponse = ((SingleEvent<BaseResponse>) -> Void)
-public typealias ObservableResponse = (AnyObserver<BaseResponse>)
+public typealias SingleResponse = ((SingleEvent<HandyResponse>) -> Void)
+public typealias ObservableResponse = (AnyObserver<HandyResponse>)
 public typealias RestCompletion = RestResult<RestResponse, RestError>
 public typealias SingleClosure = (@escaping SingleResponse, RestCompletion) -> Void
 public typealias ObservableClosure = (ObservableResponse, RestCompletion) -> Bool

@@ -39,6 +39,6 @@ public protocol RequestAdapter: class {
 
 /// Request
 public protocol Request {
-  func launch(_ target: ApiType, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> Single<BaseResponse>
-  func launch(_ target: ApiType, alwaysFetchCache: Bool, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> Observable<BaseResponse>
+  func launch(_ target: ApiType, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> Single<HandyResponse>
+  func launch(_ target: ApiType, alwaysFetchCache: Bool, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> Observable<HandyResponse>
 }

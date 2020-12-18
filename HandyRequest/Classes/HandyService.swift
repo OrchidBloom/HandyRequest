@@ -110,7 +110,7 @@ extension HandyService: RequestConfig {
 
 extension HandyService: Request {
   
-  public func launch(_ target: ApiType, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> Single<BaseResponse> {
+  public func launch(_ target: ApiType, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> Single<HandyResponse> {
     return Single.create {[weak self] single in
       guard let self = self else { return Disposables.create()}
       let task = self.provider.request(MultiTarget(target), callbackQueue: callbackQueue, progress: progress, completion: { (result) in
@@ -125,7 +125,7 @@ extension HandyService: Request {
     }
   }
   
-  public func launch(_ target: ApiType, alwaysFetchCache: Bool, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> Observable<BaseResponse> {
+  public func launch(_ target: ApiType, alwaysFetchCache: Bool, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> Observable<HandyResponse> {
     return Observable.create {[weak self] (observer) -> Disposable in
       guard let self = self else { return Disposables.create()}
       if alwaysFetchCache, let response = self.cache.fetchResponseCache(target: target) {
@@ -162,7 +162,25 @@ private final class NetworkHUDPlugin: PluginType {
 }
 
 private class DefaultRequestAdapter: RequestAdapter {
-
+  func singleClosureBuilder(single: @escaping SingleResponse, result: RestCompletion) {
+    switch result {
+      case .success(let reponse):
+        single(.success(HandyResponse(reponse)))
+      case .failure(let error):
+        single(.error(error))
+    }
+  }
+  func observableClosureBuilder(observer: ObservableResponse, result: RestCompletion) -> Bool {
+    switch result {
+      case .success(let reponse):
+        observer.onNext(HandyResponse(reponse))
+        observer.onCompleted()
+        return true
+      case .failure(let error):
+        observer.onError(error)
+        return false
+    }
+  }
 }
 
 
