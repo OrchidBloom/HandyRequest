@@ -8,14 +8,14 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HandyRequest'
-  s.version          = '0.0.3'
+  s.version          = '0.0.4'
   s.summary          = 'Convenient network request, fast processing result.'
   s.description      = 'Quickly and quickly request processing of analytical data'
 
-  s.homepage         = 'https://github.com/OrchidBloom/HandyRequest'
+  s.homepage         = 'https://github.com/orchid-bloom/HandyRequest'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'OrchidBloom' => 'temagsoft@gmail.com' }
-  s.source           = { :git => 'https://github.com/OrchidBloom/HandyRequest.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/orchid-bloom/HandyRequest.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '10.0'
 
