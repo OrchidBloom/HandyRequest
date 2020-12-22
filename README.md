@@ -1,6 +1,5 @@
 # HandyRequest
 
-[![CI Status](https://img.shields.io/travis/OrchidBloom/HandyRequest.svg?style=flat)](https://travis-ci.org/OrchidBloom/HandyRequest)
 [![Version](https://img.shields.io/cocoapods/v/HandyRequest.svg?style=flat)](https://cocoapods.org/pods/HandyRequest)
 [![License](https://img.shields.io/cocoapods/l/HandyRequest.svg?style=flat)](https://cocoapods.org/pods/HandyRequest)
 [![Platform](https://img.shields.io/cocoapods/p/HandyRequest.svg?style=flat)](https://cocoapods.org/pods/HandyRequest)
