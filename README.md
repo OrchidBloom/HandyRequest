@@ -21,7 +21,7 @@ pod 'HandyRequest'
 
 ## Author
 
-OrchidBloom, Tema.Tian
+Tema.Tian
 
 ## License
 
