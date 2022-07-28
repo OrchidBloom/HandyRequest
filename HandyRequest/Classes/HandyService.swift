@@ -175,7 +175,7 @@ private class DefaultRequestAdapter: RequestAdapter {
       case .success(let reponse):
         single(.success(HandyResponse(reponse)))
       case .failure(let error):
-        single(.error(error))
+        single(.failure(error))
     }
   }
   func observableClosureBuilder(observer: ObservableResponse, result: RestCompletion) -> Bool {

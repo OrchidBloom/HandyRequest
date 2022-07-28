@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ObjectMapper
 import SwiftyJSON
 import RxSwift
 
@@ -28,47 +27,11 @@ extension HandyResponse {
       throw ResponseTransformFailed.dataMapJson(message: "response transform to jsonObject Failed")
     }
   }
-
-  /// 返回T
-  /// - 描述: 将response转换为T
-  public func mapObject<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) throws -> T {
-    guard let object = Mapper<T>(context: context).map(JSON: data) else {
-      throw ResponseTransformFailed.responseTransformMappable(message: "map json to Mappable Model failed")
-    }
-    return object
-  }
-  
-  /// 返回[T]
-  /// - 描述: 将response转换为[T]
-  public func mapArray<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) throws -> [T] {
-    guard let array = data["data"] as? [[String : Any]] else {
-      throw ResponseTransformFailed.responseTransformMappableList(message: "map json to Mappable List failed")
-    }
-    return Mapper<T>(context: context).mapArray(JSONArray: array)
-  }
 }
 
 // MARK: - JSON map BaseMappable suppurt
 
 extension JSON {
-  /// 返回T
-  /// - 描述: 将response转换为T
-  public func mapObject<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) throws -> T {
-    guard let rawString = self.rawString(), let object = Mapper<T>(context: context).map(JSONString: rawString) else {
-      throw ResponseTransformFailed.responseTransformMappable(message: "map json to Mappable Model failed")
-    }
-    return object
-  }
-  
-  /// 返回[T]
-  /// - 描述: 将response转换为[T]
-  public func mapArray<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) throws -> [T] {
-    guard let rawString = self.rawString(), let array = Mapper<T>().mapArray(JSONString: rawString) else {
-      throw ResponseTransformFailed.responseTransformMappableList(message: "map json to Mappable List failed")
-    }
-    return array
-  }
-  
   /// 返回[T]
   /// - 描述: 将response转换为[T]
   public func decodeObject<T: Codable>(_ type: T.Type) throws -> T {
@@ -124,18 +87,6 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == HandyResponse
   
   /// 返回Single<T>
   /// - 参数: 需要解析的BaseMappable,key
-  public func mapObjectForKey<T: BaseMappable>(_ key: String, baseMappable: T.Type, context: MapContext? = nil) -> Single<T> {
-    return mapJSONForKey(key).mapObject(baseMappable, context: context)
-  }
-  
-  /// 返回Single[T]
-  /// - 参数: 需要解析的BaseMappable,key
-  public func mapArrayForKey<T: BaseMappable>(_ key: String, baseMappable: T.Type, context: MapContext? = nil) -> Single<[T]> {
-    return mapJSONForKey(key).mapArray(baseMappable, context: context)
-  }
-  
-  /// 返回Single<T>
-  /// - 参数: 需要解析的BaseMappable,key
   public func mapObjectForKey<T: Codable>(_ key: String, type: T.Type) -> Single<T> {
     return mapJSONForKey(key).decodeObject(type)
   }
@@ -144,22 +95,6 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == HandyResponse
   /// - 参数: 需要解析的BaseMappable,key
   public func mapArrayForKey<T: Codable>(_ key: String, type: T.Type) -> Single<[T]> {
     return mapJSONForKey(key).decodeArray(type)
-  }
-  
-  /// 返回Single<T>
-  /// - 参数: 需要解析的BaseMappable
-  public func mapObject<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) -> Single<T> {
-    return flatMap { response -> Single<T> in
-      return Single.just(try response.mapObject(type))
-    }
-  }
-  
-  /// 返回Single<[T]
-  /// - 参数: 需要解析的BaseMappable
-  public func mapArray<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) -> Single<[T]> {
-    return flatMap { response -> Single<[T]> in
-      return Single.just(try response.mapArray(type, context: context))
-    }
   }
 }
 
@@ -194,22 +129,6 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == JSON {
       }
     }
     return flatMap { .just( $0[key] )}
-  }
-  
-  /// 返回Single<T?>
-  /// - 参数: 需要解析的BaseMappable
-  public func mapObject<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) -> Single<T> {
-    return flatMap { response -> Single<T> in
-      return Single.just(try response.mapObject(type, context: context))
-    }
-  }
-  
-  /// 返回Single<[T]
-  /// - 参数: 需要解析的BaseMappable
-  public func mapArray<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) -> Single<[T]> {
-    return flatMap { response -> Single<[T]> in
-      return Single.just(try response.mapArray(type, context: context))
-    }
   }
   
   /// 返回Single<T>
@@ -269,18 +188,6 @@ extension ObservableType where Element == HandyResponse {
   
   /// 返回Observable<T>
   /// - 参数: 需要解析的BaseMappable,key
-  public func mapObjectForKey<T: BaseMappable>(_ key: String, baseMappable: T.Type, context: MapContext? = nil) -> Observable<T> {
-    return mapJSONForKey(key).mapObject(baseMappable, context: context)
-  }
-  
-  /// 返回Observable[T]
-  /// - 参数: 需要解析的BaseMappable,key
-  public func mapArrayForKey<T: BaseMappable>(_ key: String, baseMappable: T.Type, context: MapContext? = nil) -> Observable<[T]> {
-    return mapJSONForKey(key).mapArray(baseMappable, context: context)
-  }
-  
-  /// 返回Observable<T>
-  /// - 参数: 需要解析的BaseMappable,key
   public func mapObjectForKey<T: Codable>(_ key: String, type: T.Type) -> Observable<T> {
     return mapJSONForKey(key).decodeObject(type)
   }
@@ -289,22 +196,6 @@ extension ObservableType where Element == HandyResponse {
   /// - 参数: 需要解析的BaseMappable,key
   public func mapArrayForKey<T: Codable>(_ key: String, type: T.Type) -> Observable<[T]> {
     return mapJSONForKey(key).decodeArray(type)
-  }
-  
-  /// 返回Observable<T?>
-  /// - 参数: 需要解析的BaseMappable
-  public func mapObject<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) -> Observable<T> {
-    return flatMap { response -> Observable<T> in
-      return Observable.just(try response.mapObject(type, context: context))
-    }
-  }
-  
-  /// 返回Observable<[T]
-  /// - 参数: 需要解析的BaseMappable
-  public func mapArray<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) -> Observable<[T]> {
-    return flatMap { response -> Observable<[T]> in
-      return Observable.just(try response.mapArray(type, context: context))
-    }
   }
 }
 
@@ -339,22 +230,6 @@ extension ObservableType where Element == JSON {
       }
     }
     return flatMap { Observable.just( $0[key] )}
-  }
-  
-  /// 返回Observable<T?>
-  /// - 参数: 需要解析的BaseMappable
-  public func mapObject<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) -> Observable<T> {
-    return flatMap { response -> Observable<T> in
-      return Observable.just(try response.mapObject(type, context: context))
-    }
-  }
-  
-  /// 返回Observable<[T]
-  /// - 参数: 需要解析的BaseMappable
-  public func mapArray<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) -> Observable<[T]> {
-    return flatMap { response -> Observable<[T]> in
-      return Observable.just(try response.mapArray(type, context: context))
-    }
   }
   
   /// 返回Observable<T>

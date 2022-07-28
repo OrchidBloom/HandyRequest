@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HandyRequest'
-  s.version          = '0.0.4'
+  s.version          = '0.0.5'
   s.summary          = 'Convenient network request, fast processing result.'
   s.description      = 'Quickly and quickly request processing of analytical data'
 
@@ -20,8 +20,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '10.0'
 
   s.source_files = 'HandyRequest/Classes/**/*'
-  s.dependency 'Moya', '~> 14.0.0'
-  s.dependency 'RxSwift', '~> 5.1.1'
-  s.dependency 'ObjectMapper', '~> 4.2.0'
-  s.dependency 'SwiftyJSON', '~> 5.0'
+  s.dependency 'Moya', '~> 15.0.0'
+  s.dependency 'RxSwift', '~> 6.5.0'
+  s.dependency 'SwiftyJSON', '~> 5.0.1'
 end

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ObjectMapper
 import SwiftyJSON
 import CommonCrypto
 import Moya
@@ -55,15 +54,6 @@ public extension Dictionary {
     }
   }
   
-  /// 返回T
-  /// - 描述: 将response转换为T
-  func mapObject<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) throws -> T {
-    guard let rawString = self.jsonString(), let object = Mapper<T>(context: context).map(JSONString: rawString) else {
-      throw ResponseTransformFailed.responseTransformMappable(message: "map json to Mappable Model failed")
-    }
-    return object
-  }
-  
   mutating func merge(_ dict: [Key: Value]) {
     self.merge(dict) { (_, new) in new }
   }
@@ -85,14 +75,5 @@ public extension Array {
       return nil
     }
     return String(data: data, encoding: .utf8)
-  }
-  
-  /// 返回T
-  /// - 描述: 将response转换为T
-  func mapObject<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) throws -> T {
-    guard let rawString = self.jsonString(), let object = Mapper<T>(context: context).map(JSONString: rawString) else {
-      throw ResponseTransformFailed.responseTransformMappable(message: "map json to Mappable Model failed")
-    }
-    return object
   }
 }

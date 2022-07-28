@@ -1,17 +1,15 @@
 PODS:
-  - Alamofire (5.4.0)
-  - HandyRequest (0.0.2):
-    - Moya (~> 14.0.0)
-    - ObjectMapper (~> 4.2.0)
-    - RxSwift (~> 5.1.1)
-    - SwiftyJSON (~> 5.0)
-  - Moya (14.0.0):
-    - Moya/Core (= 14.0.0)
-  - Moya/Core (14.0.0):
+  - Alamofire (5.6.2)
+  - HandyRequest (0.0.4):
+    - Moya (~> 15.0.0)
+    - RxSwift (~> 6.5.0)
+    - SwiftyJSON (~> 5.0.1)
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
-  - ObjectMapper (4.2.0)
-  - RxSwift (5.1.1)
-  - SwiftyJSON (5.0.0)
+  - RxSwift (6.5.0)
+  - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
   - HandyRequest (from `../`)
@@ -20,7 +18,6 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - Moya
-    - ObjectMapper
     - RxSwift
     - SwiftyJSON
 
@@ -29,13 +26,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
-  HandyRequest: 27dda174cbe1dc83ec6c4f68e4929f266be205d4
-  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
-  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
-  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
-  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  HandyRequest: acd57c8c0fd010aa9c6e802baa2ffe2641cff46c
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
 PODFILE CHECKSUM: 00758e3995e36067a45ad62130aaa4bd2fdfbdd6
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.11.3
