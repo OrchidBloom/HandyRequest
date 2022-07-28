@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HandyRequest'
-  s.version          = '0.0.5'
+  s.version          = '0.0.6'
   s.summary          = 'Convenient network request, fast processing result.'
   s.description      = 'Quickly and quickly request processing of analytical data'
 
