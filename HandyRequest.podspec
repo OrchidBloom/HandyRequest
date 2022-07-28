@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/orchid-bloom/HandyRequest.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '10.0'
-
+  s.swift_versions = '5.5' 
   s.source_files = 'HandyRequest/Classes/**/*'
   s.dependency 'Moya', '~> 15.0.0'
   s.dependency 'RxSwift', '~> 6.5.0'
