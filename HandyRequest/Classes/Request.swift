@@ -13,7 +13,7 @@ import Moya
 public let Rest: (RequestConfig & Request) = HandyService()
 
 /// Service Config
-public protocol RequestConfig: class {
+public protocol RequestConfig: AnyObject {
   var provider: MoyaProvider<MultiTarget> { get }
   var cache: Cache { get }
   var delegate: RequestErroreDelegate? { set get }
@@ -25,12 +25,12 @@ public protocol RequestConfig: class {
 }
 
 /// HandleRestError Delegate
-public protocol RequestErroreDelegate: class {
+public protocol RequestErroreDelegate: AnyObject {
   func handleRestError(_ err: Error)
 }
 
 // Request Adapter & Handling the business layer
-public protocol RequestAdapter: class {
+public protocol RequestAdapter: AnyObject {
     func endpointClosureBuilder(target: MultiTarget) -> Endpoint
     func requestClosureBuilder(endpoint: Endpoint, closure: RestProvider<MultiTarget>.RequestResultClosure)
     func singleClosureBuilder(single: @escaping SingleResponse, result: RestCompletion)
